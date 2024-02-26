@@ -20,7 +20,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
-    compileOnly("com.charleskorn.kaml:kaml:0.57.0")
 }
 
 tasks.withType<JavaCompile> {
