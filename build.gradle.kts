@@ -13,12 +13,15 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://redempt.dev/")
 }
 
 dependencies {
     implementation(kotlin("stdlib", version = "1.9.22"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+
+    compileOnly("com.github.Redempt:RedLib:6.5.10")
 
 }
 
