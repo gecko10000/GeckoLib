@@ -4,7 +4,7 @@ import com.charleskorn.kaml.*
 import kotlinx.serialization.KSerializer
 import java.io.File
 
-class YamlFileManager<T>(
+class YamlFileManager<T : Any>(
     private val configFile: File,
     private val backupDirectory: File,
     private val initialValue: T,

@@ -20,10 +20,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
-    //implementation("io.insert-koin:koin-core:3.5.3")
-
     compileOnly("com.charleskorn.kaml:kaml:0.57.0")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
 
 tasks.withType<JavaCompile> {
