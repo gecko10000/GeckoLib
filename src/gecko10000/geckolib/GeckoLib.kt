@@ -1,10 +1,9 @@
 package gecko10000.geckolib
 
+import gecko10000.geckolib.extensions.MM
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-
-val MM = MiniMessage.miniMessage()
 
 class GeckoLib : JavaPlugin() {
     override fun onDisable() {
