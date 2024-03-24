@@ -34,33 +34,29 @@ object PlayerPlacedBlockTracker {
         return ChunkBlockPositions.deserialize(string).blocks.contains(block.toBlockPos())
     }
 
-    private fun addBlocks(blocks: Iterable<Block>) {
+    fun addBlocks(blocks: Iterable<Block>) {
         val chunk = blocks.firstOrNull()?.chunk ?: return
         val string = chunk.persistentDataContainer.get(blockDataKey, PersistentDataType.STRING)
-        println(string)
         val newPositions = if (string == null) {
             ChunkBlockPositions(blocks.map { it.toBlockPos() }.toSet())
         } else {
             val positions = ChunkBlockPositions.deserialize(string)
             positions.copy(blocks = positions.blocks.plus(blocks.map { it.toBlockPos() }.toSet()))
         }
-        println(newPositions.serialize())
         chunk.persistentDataContainer.set(blockDataKey, PersistentDataType.STRING, newPositions.serialize())
     }
 
-    private fun addBlock(block: Block) = addBlocks(setOf(block))
+    fun addBlock(block: Block) = addBlocks(setOf(block))
 
-    private fun removeBlocks(blocks: Iterable<Block>) {
+    fun removeBlocks(blocks: Iterable<Block>) {
         val chunk = blocks.firstOrNull()?.chunk ?: return
         val string = chunk.persistentDataContainer.get(blockDataKey, PersistentDataType.STRING) ?: return
-        println(string)
         val positions = ChunkBlockPositions.deserialize(string)
         val newPositions = positions.copy(blocks = positions.blocks.minus(blocks.map { it.toBlockPos() }.toSet()))
-        println(newPositions.serialize())
         chunk.persistentDataContainer.set(blockDataKey, PersistentDataType.STRING, newPositions.serialize())
     }
 
-    private fun removeBlock(block: Block) = removeBlocks(setOf(block))
+    fun removeBlock(block: Block) = removeBlocks(setOf(block))
 
     init {
         EventListener(BlockPlaceEvent::class.java, EventPriority.MONITOR) { e ->
