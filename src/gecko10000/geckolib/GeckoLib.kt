@@ -4,11 +4,21 @@ import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
 class GeckoLib : JavaPlugin() {
+
+    override fun onEnable() {
+        instance = this
+    }
+
     override fun onDisable() {
         Bukkit.getOnlinePlayers()
         .filter { it.openInventory.topInventory.holder is GUI }
         .forEach { player ->
             player.closeInventory()
         }
+    }
+
+    companion object {
+        private lateinit var instance: GeckoLib
+        internal fun get() = instance
     }
 }
