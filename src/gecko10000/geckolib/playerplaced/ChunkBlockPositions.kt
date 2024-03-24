@@ -1,7 +1,5 @@
 package gecko10000.geckolib.playerplaced
 
-import gecko10000.geckolib.playerplaced.PlayerPlacedBlockTracker.LOWER_4
-import org.bukkit.Chunk
 
 // x,z : ys <1/5>: [1,2]
 data class ChunkBlockPositions(

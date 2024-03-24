@@ -4,21 +4,22 @@ import gecko10000.geckolib.GeckoLib
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.event.EventPriority
-import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.block.BlockBurnEvent
-import org.bukkit.event.block.BlockExplodeEvent
-import org.bukkit.event.block.BlockPistonExtendEvent
-import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.block.*
 import org.bukkit.event.entity.EntityChangeBlockEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.persistence.PersistentDataType
 import redempt.redlib.misc.EventListener
 
-object PlayerPlacedBlockTracker {
+
+const val LOWER_4 = (1 shl 4) - 1
+
+class PlayerPlacedBlockTracker internal constructor() {
+
+    companion object {
+        val instance by lazy { PlayerPlacedBlockTracker() }
+    }
 
     private val blockDataKey by lazy { NamespacedKey(GeckoLib.get(), "player_placed") }
-
-    const val LOWER_4 = (1 shl 4) - 1
 
     private fun Block.toBlockPos(): BlockPos {
         return BlockPos(
@@ -31,6 +32,7 @@ object PlayerPlacedBlockTracker {
     fun isPlayerPlaced(block: Block): Boolean {
         val chunk = block.chunk
         val string = chunk.persistentDataContainer.get(blockDataKey, PersistentDataType.STRING) ?: return false
+        //println("Checking: ${ChunkBlockPositions.deserialize(string)}")
         return ChunkBlockPositions.deserialize(string).blocks.contains(block.toBlockPos())
     }
 
@@ -43,6 +45,7 @@ object PlayerPlacedBlockTracker {
             val positions = ChunkBlockPositions.deserialize(string)
             positions.copy(blocks = positions.blocks.plus(blocks.map { it.toBlockPos() }.toSet()))
         }
+        //println("Added: $newPositions")
         chunk.persistentDataContainer.set(blockDataKey, PersistentDataType.STRING, newPositions.serialize())
     }
 
@@ -53,6 +56,7 @@ object PlayerPlacedBlockTracker {
         val string = chunk.persistentDataContainer.get(blockDataKey, PersistentDataType.STRING) ?: return
         val positions = ChunkBlockPositions.deserialize(string)
         val newPositions = positions.copy(blocks = positions.blocks.minus(blocks.map { it.toBlockPos() }.toSet()))
+        //println("Removed: $newPositions")
         chunk.persistentDataContainer.set(blockDataKey, PersistentDataType.STRING, newPositions.serialize())
     }
 

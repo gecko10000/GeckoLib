@@ -1,5 +1,6 @@
 package gecko10000.geckolib
 
+import gecko10000.geckolib.playerplaced.PlayerPlacedBlockTracker
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -7,14 +8,15 @@ class GeckoLib : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+        PlayerPlacedBlockTracker.instance
     }
 
     override fun onDisable() {
         Bukkit.getOnlinePlayers()
-        .filter { it.openInventory.topInventory.holder is GUI }
-        .forEach { player ->
-            player.closeInventory()
-        }
+            .filter { it.openInventory.topInventory.holder is GUI }
+            .forEach { player ->
+                player.closeInventory()
+            }
     }
 
     companion object {
