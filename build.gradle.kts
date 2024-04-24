@@ -18,9 +18,10 @@ dependencies {
     implementation(kotlin("stdlib", version = "1.9.22"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
 
     compileOnly("com.github.Redempt:RedLib:6.5.10")
-
+    compileOnly(files("libs/CMILib1.4.6.3.jar"))
 }
 
 tasks.withType<JavaCompile> {
