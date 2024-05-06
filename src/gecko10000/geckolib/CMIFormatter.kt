@@ -16,4 +16,9 @@ object CMIFormatter {
         }
     }
 
+    fun uncolor(component: Component): String {
+        val deserialized = componentSerializer.serialize(component)
+        return CMIChatColor.deColorize(deserialized)
+    }
+
 }
