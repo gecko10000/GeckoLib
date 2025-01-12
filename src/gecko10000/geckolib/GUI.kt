@@ -1,6 +1,7 @@
 package gecko10000.geckolib
 
 import gecko10000.geckolib.extensions.parseMM
+import io.papermc.paper.datacomponent.DataComponentTypes
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack
 import redempt.redlib.inventorygui.InventoryGUI
 import redempt.redlib.misc.Task
 
+@Suppress("UnstableApiUsage")
 abstract class GUI(val player: Player) : InventoryHolder {
 
     abstract fun createInventory(): InventoryGUI
@@ -26,6 +28,7 @@ abstract class GUI(val player: Player) : InventoryHolder {
             item.editMeta {
                 it.displayName(Component.empty())
             }
+            item.setData(DataComponentTypes.HIDE_TOOLTIP)
             item
         }
         val BACK: ItemStack = run {
