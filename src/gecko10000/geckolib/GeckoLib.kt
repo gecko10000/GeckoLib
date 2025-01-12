@@ -8,7 +8,7 @@ class GeckoLib : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
-        PlayerPlacedBlockTracker.instance
+        PlayerPlacedBlockTracker
     }
 
     override fun onDisable() {

@@ -1,6 +1,5 @@
 package gecko10000.geckolib.playerplaced
 
-import gecko10000.geckolib.GeckoLib
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.event.EventPriority
@@ -11,13 +10,10 @@ import org.bukkit.persistence.PersistentDataType
 import redempt.redlib.misc.EventListener
 
 
-class PlayerPlacedBlockTracker internal constructor() {
+object PlayerPlacedBlockTracker {
 
-    companion object {
-        val instance by lazy { PlayerPlacedBlockTracker() }
-        const val KEY_PREFIX: String = "pp_"
-        const val LOWER_4 = (1 shl 4) - 1
-    }
+    const val KEY_PREFIX: String = "p"
+    const val LOWER_4 = (1 shl 4) - 1
 
     private fun Block.toBlockPos(): BlockPos {
         return BlockPos(
@@ -28,7 +24,7 @@ class PlayerPlacedBlockTracker internal constructor() {
     }
 
     private fun BlockPos.toNamespacedKey(): NamespacedKey {
-        return NamespacedKey(GeckoLib.get(), "$KEY_PREFIX${this.toKey()}")
+        return NamespacedKey("gl", "$KEY_PREFIX${this.toKey()}")
     }
 
     fun isPlayerPlaced(block: Block): Boolean {
@@ -76,8 +72,8 @@ class PlayerPlacedBlockTracker internal constructor() {
             if (e.isCancelled) return@EventListener
             val sources = e.blocks
             val destinations = sources.map { it.getRelative(e.direction) }
-            removeBlocks(sources)
-            addBlocks(destinations)
+            removeBlocks(sources.minus(destinations.toSet()))
+            addBlocks(destinations.minus(sources.toSet()))
         }
         EventListener(EntityChangeBlockEvent::class.java, EventPriority.MONITOR) { e ->
             if (e.isCancelled) return@EventListener

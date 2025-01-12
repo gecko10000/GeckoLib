@@ -1,7 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "2.0.21"
     id("java-library")
     id("maven-publish")
+    kotlin("plugin.serialization") version "1.4.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -15,13 +16,16 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib", version = "1.9.22"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    api(kotlin("stdlib", version = "2.0.21"))
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
-
-    compileOnly("com.github.Redempt:RedLib:6.5.10")
-    compileOnly(files("libs/CMILib1.4.6.3.jar"))
+    compileOnly("com.github.Redempt:RedLib:6.6.1")
+    api("io.insert-koin:koin-core:3.5.3") {
+        exclude("org.jetbrains.kotlin")
+    }
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    api("com.charleskorn.kaml:kaml:0.67.0")
 }
 
 tasks.withType<JavaCompile> {
@@ -55,7 +59,7 @@ publishing {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 tasks.register("update") {
