@@ -19,7 +19,7 @@ dependencies {
     compileOnly(kotlin("stdlib", version = "2.0.21")) // From libraries in plugin.yml
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
-    compileOnly("com.github.Redempt:RedLib:6.6.1")
+    compileOnlyApi("com.github.Redempt:RedLib:6.6.1")
 
     api("io.insert-koin:koin-core:3.5.3") {
         exclude("org.jetbrains.kotlin")
