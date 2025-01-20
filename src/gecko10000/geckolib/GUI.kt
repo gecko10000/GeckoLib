@@ -18,9 +18,15 @@ abstract class GUI(val player: Player) : InventoryHolder {
     abstract fun createInventory(): InventoryGUI
     protected val inventory: InventoryGUI by lazy { createInventory() }
     final override fun getInventory(): Inventory = inventory.inventory
+    var shouldOpen: Boolean = true
 
     init {
-        Task.syncDelayed { -> inventory.open(player) }
+        Task.syncDelayed { ->
+            if (shouldOpen)
+                inventory.open(player)
+            else
+                player.closeInventory()
+        }
     }
 
     companion object {
