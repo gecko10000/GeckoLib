@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import redempt.redlib.inventorygui.InventoryGUI
+import redempt.redlib.inventorygui.ItemButton
 import redempt.redlib.misc.Task
 
 @Suppress("UnstableApiUsage")
@@ -31,12 +32,13 @@ abstract class GUI(val player: Player) : InventoryHolder {
             item.setData(DataComponentTypes.HIDE_TOOLTIP)
             item
         }
-        val BACK: ItemStack = run {
+
+        fun BACK(callback: () -> Unit): ItemButton {
             val item = ItemStack.of(Material.RED_STAINED_GLASS_PANE)
             item.editMeta {
                 it.displayName(parseMM("<red>Back"))
             }
-            item
+            return ItemButton.create(item) { e -> callback() }
         }
     }
 
