@@ -17,7 +17,6 @@ bukkit {
     depend = listOf("RedLib")
     // Load our Kotlin first so dependent plugins can use it
     loadBefore = listOf("Nexo")
-    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
 }
 
 repositories {
@@ -27,13 +26,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly(kotlin("stdlib", version = "2.0.21")) // From libraries in plugin.yml
+    api(kotlin("stdlib", version = "2.0.21"))
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
     compileOnlyApi("com.github.Redempt:RedLib:6.6.1")
 
-    api("io.insert-koin:koin-core:3.5.3") {
+    api(project.dependencies.platform("io.insert-koin:koin-bom:3.5.3"))
+    api("io.insert-koin:koin-core") {
         exclude("org.jetbrains.kotlin")
     }
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
