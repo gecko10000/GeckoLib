@@ -4,10 +4,21 @@ plugins {
     id("maven-publish")
     kotlin("plugin.serialization") version "1.4.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("de.eldoria.plugin-yml.bukkit") version "0.7.1"
 }
 
 group = "gecko10000.geckolib"
 version = "1.0-SNAPSHOT"
+
+bukkit {
+    name = "GeckoLib"
+    main = "$group.$name"
+    apiVersion = "1.13"
+    depend = listOf("RedLib")
+    // Load our Kotlin first so dependent plugins can use it
+    loadBefore = listOf("Nexo")
+    libraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+}
 
 repositories {
     mavenCentral()
