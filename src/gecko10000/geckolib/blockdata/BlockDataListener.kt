@@ -4,6 +4,7 @@ import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.*
+import org.bukkit.event.entity.EntityChangeBlockEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import redempt.redlib.misc.EventListener
 
@@ -47,6 +48,10 @@ class BlockDataListener<P : Any>(private val manager: BlockDataManager<*, P>) {
         EventListener(BlockPistonRetractEvent::class.java, EventPriority.MONITOR) { e ->
             if (e.isCancelled) return@EventListener
             handlePiston(e.blocks, e.direction)
+        }
+        EventListener(EntityChangeBlockEvent::class.java, EventPriority.MONITOR) { e ->
+            if (e.isCancelled) return@EventListener
+            manager.remove(e.block)
         }
     }
 }

@@ -2,7 +2,10 @@ package gecko10000.geckolib.playerplaced
 
 import gecko10000.geckolib.blockdata.BlockDataManager
 import org.bukkit.block.Block
+import org.bukkit.event.EventPriority
+import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.persistence.PersistentDataType
+import redempt.redlib.misc.EventListener
 
 
 object PlayerPlacedBlockTracker {
@@ -20,5 +23,12 @@ object PlayerPlacedBlockTracker {
     fun removeBlocks(blocks: Iterable<Block>) = blocks.forEach(this::removeBlock)
 
     fun removeBlock(block: Block) = bdm.remove(block)
+
+    init {
+        EventListener(BlockPlaceEvent::class.java, EventPriority.MONITOR) { e ->
+            if (e.isCancelled) return@EventListener
+            addBlock(e.block)
+        }
+    }
 
 }
