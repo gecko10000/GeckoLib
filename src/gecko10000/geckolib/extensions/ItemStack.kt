@@ -9,9 +9,11 @@ fun ItemStack?.isEmpty(): Boolean {
 
 fun ItemStack.name(): Component {
     val meta = this.itemMeta
-    val backupName = if (meta.hasItemName())
-        meta.itemName()
-    else
-        Component.translatable(this.translationKey())
-    return meta.customName() ?: backupName
+    val backupName = {
+        if (meta.hasItemName())
+            meta.itemName()
+        else
+            Component.translatable(this.translationKey())
+    }
+    return meta.customName() ?: backupName()
 }
