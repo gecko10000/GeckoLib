@@ -2,6 +2,7 @@ package gecko10000.geckolib
 
 import gecko10000.geckolib.extensions.parseMM
 import io.papermc.paper.datacomponent.DataComponentTypes
+import io.papermc.paper.datacomponent.item.TooltipDisplay
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -35,7 +36,10 @@ abstract class GUI(val player: Player) : InventoryHolder {
             item.editMeta {
                 it.displayName(Component.empty())
             }
-            item.setData(DataComponentTypes.HIDE_TOOLTIP)
+            item.setData(
+                DataComponentTypes.TOOLTIP_DISPLAY,
+                TooltipDisplay.tooltipDisplay().hideTooltip(true).build()
+            )
             item
         }
 

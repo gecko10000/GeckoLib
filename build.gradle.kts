@@ -28,7 +28,7 @@ repositories {
 dependencies {
     api(kotlin("stdlib", version = "2.0.21"))
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
     compileOnlyApi("com.github.Redempt:RedLib:6.6.1")
 
