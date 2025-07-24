@@ -1,6 +1,7 @@
-package gecko10000.geckolib
+package gecko10000.geckolib.inventorygui
 
 import gecko10000.geckolib.extensions.parseMM
+import gecko10000.geckolib.misc.Task
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.TooltipDisplay
 import net.kyori.adventure.text.Component
@@ -9,9 +10,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
-import redempt.redlib.inventorygui.InventoryGUI
-import redempt.redlib.inventorygui.ItemButton
-import redempt.redlib.misc.Task
 
 @Suppress("UnstableApiUsage")
 abstract class GUI(val player: Player) : InventoryHolder {

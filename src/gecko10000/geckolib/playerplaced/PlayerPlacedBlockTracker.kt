@@ -1,11 +1,11 @@
 package gecko10000.geckolib.playerplaced
 
 import gecko10000.geckolib.blockdata.BlockDataManager
+import gecko10000.geckolib.misc.EventListener
 import org.bukkit.block.Block
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.persistence.PersistentDataType
-import redempt.redlib.misc.EventListener
 
 
 object PlayerPlacedBlockTracker {

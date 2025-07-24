@@ -1,5 +1,6 @@
 package gecko10000.geckolib
 
+import gecko10000.geckolib.inventorygui.GUI
 import gecko10000.geckolib.playerplaced.PlayerPlacedBlockTracker
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
