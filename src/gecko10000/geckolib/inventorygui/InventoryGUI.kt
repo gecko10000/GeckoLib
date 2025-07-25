@@ -1,6 +1,7 @@
 package gecko10000.geckolib.inventorygui
 
 import gecko10000.geckolib.GeckoLib
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -32,12 +33,12 @@ class InventoryGUI(
      *
      * @return The set of open slots
      */
-    val openSlots: MutableSet<Int?> = LinkedHashSet<Int?>()
-    private val excludedFillerSlots: MutableList<Int?> = ArrayList()
+    val openSlots: MutableSet<Int> = LinkedHashSet()
+    private val excludedFillerSlots: MutableList<Int> = ArrayList()
     private var onDestroy: Runnable? = null
-    private var onClickOpenSlot = BiConsumer { e: InventoryClickEvent?, i: MutableList<Int?>? -> }
-    private var onDragOpenSlot = Consumer { e: InventoryDragEvent? -> }
-    private val buttons: MutableMap<Int?, ItemButton> = HashMap()
+    private var onClickOpenSlot = BiConsumer { e: InventoryClickEvent, i: MutableList<Int> -> }
+    private var onDragOpenSlot = Consumer { e: InventoryDragEvent -> }
+    private val buttons: MutableMap<Int, ItemButton> = HashMap()
 
     private var returnItems = true
     private var destroyOnClose = true
@@ -57,7 +58,7 @@ class InventoryGUI(
      * @param size The size of the inventory
      * @param name The name of the inventory
      */
-    constructor(size: Int, name: String) : this(Bukkit.createInventory(null, size, name))
+    constructor(size: Int, name: Component) : this(Bukkit.createInventory(null, size, name))
 
     val size: Int
         /**
@@ -317,7 +318,7 @@ class InventoryGUI(
      * @param handler The handler for when an open slot is clicked
      */
     fun setOnClickOpenSlot(handler: Consumer<InventoryClickEvent?>) {
-        this.onClickOpenSlot = BiConsumer { e: InventoryClickEvent?, i: MutableList<Int?>? -> handler.accept(e) }
+        this.onClickOpenSlot = BiConsumer { e: InventoryClickEvent, i: MutableList<Int> -> handler.accept(e) }
     }
 
     /**
@@ -326,7 +327,7 @@ class InventoryGUI(
      * @param handler The handler for when an open slot is clicked, taking the event and list
      * of affected slots
      */
-    fun setOnClickOpenSlot(handler: BiConsumer<InventoryClickEvent?, MutableList<Int?>?>) {
+    fun setOnClickOpenSlot(handler: BiConsumer<InventoryClickEvent, MutableList<Int>>) {
         this.onClickOpenSlot = handler
     }
 
@@ -374,7 +375,7 @@ class InventoryGUI(
      *
      * @param onDrag The handler
      */
-    fun setOnDragOpenSlot(onDrag: Consumer<InventoryDragEvent?>) {
+    fun setOnDragOpenSlot(onDrag: Consumer<InventoryDragEvent>) {
         this.onDragOpenSlot = onDrag
     }
 
@@ -408,7 +409,7 @@ class InventoryGUI(
         }
         if (inventory != e.clickedInventory && e.action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             if (openSlots.isNotEmpty()) {
-                val slots: MutableMap<Int?, ItemStack?> = HashMap<Int?, ItemStack?>()
+                val slots: MutableMap<Int, ItemStack> = HashMap()
                 var amount = e.getCurrentItem()!!.amount
                 for (slot in openSlots) {
                     if (amount <= 0) {
@@ -453,7 +454,7 @@ class InventoryGUI(
         }
         if (e.inventory == e.clickedInventory) {
             if (openSlots.contains(e.slot)) {
-                val list: MutableList<Int?> = ArrayList()
+                val list: MutableList<Int> = ArrayList()
                 list.add(e.slot)
                 onClickOpenSlot.accept(e, list)
                 return
@@ -473,7 +474,7 @@ class InventoryGUI(
         }
     }
 
-    fun excludeFillerSlot(excludedSlots: MutableList<Int?>) {
+    fun excludeFillerSlot(excludedSlots: MutableList<Int>) {
         excludedFillerSlots.addAll(excludedSlots)
     }
 }

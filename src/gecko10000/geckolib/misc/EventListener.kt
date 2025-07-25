@@ -4,6 +4,7 @@ import gecko10000.geckolib.GeckoLib
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 
 class EventListener<T : Event>(
@@ -25,5 +26,9 @@ class EventListener<T : Event>(
     }
 
     constructor(clazz: Class<T>, listener: (T) -> Unit) : this(clazz, EventPriority.NORMAL, listener)
+
+    fun unregister() {
+        HandlerList.unregisterAll(this)
+    }
 
 }
