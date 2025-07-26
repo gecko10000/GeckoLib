@@ -147,7 +147,7 @@ class InventoryGUI(
     /**
      * @return All the ItemButtons in this GUI
      */
-    fun getButtons(): MutableList<ItemButton?> {
+    fun getButtons(): MutableList<ItemButton> {
         return ArrayList(buttons.values)
     }
 
@@ -167,7 +167,7 @@ class InventoryGUI(
      * @param slot The slot to clear
      */
     fun clearSlot(slot: Int) {
-        val button = buttons.get(slot)
+        val button = buttons[slot]
         if (button != null) {
             removeButton(button)
             return
@@ -308,7 +308,7 @@ class InventoryGUI(
      *
      * @param onDestroy The callback
      */
-    fun setOnDestroy(onDestroy: Runnable?) {
+    fun setOnDestroy(onDestroy: Runnable) {
         this.onDestroy = onDestroy
     }
 
@@ -317,7 +317,7 @@ class InventoryGUI(
      *
      * @param handler The handler for when an open slot is clicked
      */
-    fun setOnClickOpenSlot(handler: Consumer<InventoryClickEvent?>) {
+    fun setOnClickOpenSlot(handler: Consumer<InventoryClickEvent>) {
         this.onClickOpenSlot = BiConsumer { e: InventoryClickEvent, i: MutableList<Int> -> handler.accept(e) }
     }
 
@@ -349,7 +349,7 @@ class InventoryGUI(
         HandlerList.unregisterAll(this)
         if (returnItems && lastViewer != null) {
             for (slot in openSlots) {
-                val item = inventory.getItem(slot!!)
+                val item = inventory.getItem(slot)
                 if (item == null) {
                     continue
                 }
@@ -381,7 +381,7 @@ class InventoryGUI(
 
     @EventHandler
     fun onDrag(e: InventoryDragEvent) {
-        val slots = e.rawSlots.stream().filter { s: Int? -> getInventory(e.view, s!!) == inventory }.collect(
+        val slots = e.rawSlots.stream().filter { s: Int -> getInventory(e.view, s) == inventory }.collect(
             Collectors.toList()
         )
         if (slots.isEmpty()) {
@@ -415,7 +415,7 @@ class InventoryGUI(
                     if (amount <= 0) {
                         break
                     }
-                    val item = inventory.getItem(slot!!)
+                    val item = inventory.getItem(slot)
                     if (item == null) {
                         val diff = min(amount, e.getCurrentItem()!!.type.maxStackSize)
                         amount -= diff
