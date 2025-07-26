@@ -55,8 +55,8 @@ class Task private constructor(
          * @param run The task to run
          * @return The Task that has been scheduled
          */
-        fun syncDelayed(run: Runnable?): Task? {
-            return syncDelayed(GeckoLib.get(), run!!)
+        fun syncDelayed(run: Runnable): Task {
+            return syncDelayed(GeckoLib.get(), run)
         }
 
         /**
@@ -65,8 +65,8 @@ class Task private constructor(
          * @param run The task to run
          * @return The Task that has been scheduled
          */
-        fun syncDelayed(run: Consumer<Task?>?): Task? {
-            return syncDelayed(GeckoLib.get(), run!!)
+        fun syncDelayed(run: Consumer<Task>): Task {
+            return syncDelayed(GeckoLib.get(), run)
         }
 
         /**
@@ -76,8 +76,8 @@ class Task private constructor(
          * @param delay The delay in ticks to wait before running the task
          * @return The Task that has been scheduled
          */
-        fun syncDelayed(run: Runnable?, delay: Long): Task? {
-            return syncDelayed(GeckoLib.get(), run!!, delay)
+        fun syncDelayed(run: Runnable, delay: Number): Task {
+            return syncDelayed(GeckoLib.get(), run, delay)
         }
 
         /**
@@ -96,8 +96,8 @@ class Task private constructor(
          * @return The Task that has been scheduled
          */
         @JvmOverloads
-        fun syncDelayed(plugin: Plugin, run: Runnable, delay: Long = 0): Task {
-            return syncDelayed(plugin, { t: Task? -> run.run() }, delay)
+        fun syncDelayed(plugin: Plugin, run: Runnable, delay: Number = 0): Task {
+            return syncDelayed(plugin, { t: Task -> run.run() }, delay)
         }
 
         /**
@@ -107,8 +107,8 @@ class Task private constructor(
          * @param delay The delay in ticks to wait before running the task
          * @return The Task that has been scheduled
          */
-        fun syncDelayed(run: Consumer<Task?>?, delay: Long): Task? {
-            return syncDelayed(GeckoLib.get(), run!!, delay)
+        fun syncDelayed(run: Consumer<Task>, delay: Number): Task {
+            return syncDelayed(GeckoLib.get(), run, delay)
         }
 
         /**
@@ -127,10 +127,10 @@ class Task private constructor(
          * @return The Task that has been scheduled
          */
         @JvmOverloads
-        fun syncDelayed(plugin: Plugin, run: Consumer<Task?>, delay: Long = 0): Task {
+        fun syncDelayed(plugin: Plugin, run: Consumer<Task>, delay: Number = 0): Task {
             val task = arrayOf<Task?>(null)
             task[0] = Task(
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, { run.accept(task[0]) }, delay),
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, { run.accept(task[0]!!) }, delay.toLong()),
                 TaskType.SYNC_DELAYED,
                 plugin
             )
@@ -145,8 +145,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun syncRepeating(run: Runnable?, delay: Long, period: Long): Task? {
-            return syncRepeating(GeckoLib.get(), run!!, delay, period)
+        fun syncRepeating(run: Runnable, delay: Number, period: Number): Task {
+            return syncRepeating(GeckoLib.get(), run, delay, period)
         }
 
         /**
@@ -158,8 +158,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun syncRepeating(plugin: Plugin, run: Runnable, delay: Long, period: Long): Task {
-            return syncRepeating(plugin, { t: Task? -> run.run() }, delay, period)
+        fun syncRepeating(plugin: Plugin, run: Runnable, delay: Number, period: Number): Task {
+            return syncRepeating(plugin, { t: Task -> run.run() }, delay, period)
         }
 
         /**
@@ -170,8 +170,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun syncRepeating(run: Consumer<Task?>?, delay: Long, period: Long): Task? {
-            return syncRepeating(GeckoLib.get(), run!!, delay, period)
+        fun syncRepeating(run: Consumer<Task>, delay: Number, period: Number): Task {
+            return syncRepeating(GeckoLib.get(), run, delay, period)
         }
 
         /**
@@ -183,11 +183,11 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun syncRepeating(plugin: Plugin, run: Consumer<Task?>, delay: Long, period: Long): Task {
+        fun syncRepeating(plugin: Plugin, run: Consumer<Task>, delay: Number, period: Number): Task {
             val task = arrayOf<Task?>(null)
             task[0] = Task(
                 Bukkit.getScheduler()
-                    .scheduleSyncRepeatingTask(plugin, { run.accept(task[0]) }, delay, period),
+                    .scheduleSyncRepeatingTask(plugin, { run.accept(task[0]!!) }, delay.toLong(), period.toLong()),
                 TaskType.SYNC_REPEATING,
                 plugin
             )
@@ -200,8 +200,8 @@ class Task private constructor(
          * @param run The task to run
          * @return The Task that has been scheduled
          */
-        fun asyncDelayed(run: Runnable?): Task? {
-            return asyncDelayed(GeckoLib.get(), run!!)
+        fun asyncDelayed(run: Runnable): Task {
+            return asyncDelayed(GeckoLib.get(), run)
         }
 
         /**
@@ -212,7 +212,7 @@ class Task private constructor(
          * @return The Task that has been scheduled
          */
         fun asyncDelayed(plugin: Plugin, run: Runnable): Task {
-            return asyncDelayed(plugin, { t: Task? -> run.run() }, 0)
+            return asyncDelayed(plugin, { t: Task -> run.run() }, 0)
         }
 
         /**
@@ -221,8 +221,8 @@ class Task private constructor(
          * @param run The task to run
          * @return The Task that has been scheduled
          */
-        fun asyncDelayed(run: Consumer<Task?>?): Task? {
-            return asyncDelayed(GeckoLib.get(), run!!)
+        fun asyncDelayed(run: Consumer<Task>): Task {
+            return asyncDelayed(GeckoLib.get(), run)
         }
 
         /**
@@ -232,8 +232,8 @@ class Task private constructor(
          * @param delay The delay in ticks to wait before running the task
          * @return The Task that has been scheduled
          */
-        fun asyncDelayed(run: Runnable?, delay: Long): Task? {
-            return asyncDelayed(GeckoLib.get(), run!!, delay)
+        fun asyncDelayed(run: Runnable, delay: Number): Task {
+            return asyncDelayed(GeckoLib.get(), run, delay)
         }
 
         /**
@@ -244,8 +244,8 @@ class Task private constructor(
          * @param delay  The delay in ticks to wait before running the task
          * @return The Task that has been scheduled
          */
-        fun asyncDelayed(plugin: Plugin, run: Runnable, delay: Long): Task {
-            return asyncDelayed(plugin, { t: Task? -> run.run() }, delay)
+        fun asyncDelayed(plugin: Plugin, run: Runnable, delay: Number): Task {
+            return asyncDelayed(plugin, { t: Task -> run.run() }, delay)
         }
 
         /**
@@ -255,8 +255,8 @@ class Task private constructor(
          * @param delay The delay in ticks to wait before running the task
          * @return The Task that has been scheduled
          */
-        fun asyncDelayed(run: Consumer<Task?>?, delay: Long): Task? {
-            return asyncDelayed(GeckoLib.get(), run!!, delay)
+        fun asyncDelayed(run: Consumer<Task>, delay: Number): Task {
+            return asyncDelayed(GeckoLib.get(), run, delay)
         }
 
         /**
@@ -275,10 +275,10 @@ class Task private constructor(
          * @return The Task that has been scheduled
          */
         @JvmOverloads
-        fun asyncDelayed(plugin: Plugin, run: Consumer<Task?>, delay: Long = 0): Task {
+        fun asyncDelayed(plugin: Plugin, run: Consumer<Task>, delay: Number = 0): Task {
             val task = arrayOf<Task?>(null)
             task[0] = Task(
-                Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, { run.accept(task[0]) }, delay),
+                Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, { run.accept(task[0]!!) }, delay.toLong()),
                 TaskType.ASYNC_DELAYED,
                 plugin
             )
@@ -293,8 +293,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun asyncRepeating(run: Consumer<Task?>?, delay: Long, period: Long): Task? {
-            return asyncRepeating(GeckoLib.get(), run!!, delay, period)
+        fun asyncRepeating(run: Consumer<Task>, delay: Number, period: Number): Task {
+            return asyncRepeating(GeckoLib.get(), run, delay, period)
         }
 
         /**
@@ -306,11 +306,11 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun asyncRepeating(plugin: Plugin, run: Consumer<Task?>, delay: Long, period: Long): Task {
+        fun asyncRepeating(plugin: Plugin, run: Consumer<Task>, delay: Number, period: Number): Task {
             val task = arrayOf<Task?>(null)
             task[0] = Task(
                 Bukkit.getScheduler()
-                    .scheduleAsyncRepeatingTask(plugin, { run.accept(task[0]) }, delay, period),
+                    .scheduleAsyncRepeatingTask(plugin, { run.accept(task[0]!!) }, delay.toLong(), period.toLong()),
                 TaskType.ASYNC_REPEATING,
                 plugin
             )
@@ -325,8 +325,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun asyncRepeating(run: Runnable?, delay: Long, period: Long): Task? {
-            return asyncRepeating(GeckoLib.get(), run!!, delay, period)
+        fun asyncRepeating(run: Runnable, delay: Long, period: Number): Task {
+            return asyncRepeating(GeckoLib.get(), run, delay, period)
         }
 
         /**
@@ -338,8 +338,8 @@ class Task private constructor(
          * @param period The number of ticks between executions of the task
          * @return The Task that has been scheduled
          */
-        fun asyncRepeating(plugin: Plugin, run: Runnable, delay: Long, period: Long): Task {
-            return asyncRepeating(plugin, { t: Task? -> run.run() }, delay, period)
+        fun asyncRepeating(plugin: Plugin, run: Runnable, delay: Number, period: Number): Task {
+            return asyncRepeating(plugin, { t: Task -> run.run() }, delay, period)
         }
     }
 }
