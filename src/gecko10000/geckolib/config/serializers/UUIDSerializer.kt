@@ -12,9 +12,7 @@ class UUIDSerializer : KSerializer<UUID> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("uuid", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): UUID {
-        // https://github.com/charleskorn/kaml/issues/300
-        val string = decoder.beginStructure(descriptor).decodeStringElement(descriptor, 0)
-        return UUID.fromString(string)
+        return UUID.fromString(decoder.decodeString())
     }
 
     override fun serialize(encoder: Encoder, value: UUID) {

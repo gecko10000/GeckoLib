@@ -16,8 +16,7 @@ class PotionEffectTypeSerializer : KSerializer<PotionEffectType> {
 
     override fun deserialize(decoder: Decoder): PotionEffectType {
         // https://github.com/charleskorn/kaml/issues/300
-        val key = NamespacedKey.fromString(decoder.decodeString())!!
-        return registry.get(key)!!
+        return registry.getOrThrow(NamespacedKey.fromString(decoder.decodeString())!!)
     }
 
     override fun serialize(encoder: Encoder, value: PotionEffectType) {

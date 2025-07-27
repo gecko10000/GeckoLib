@@ -32,7 +32,14 @@ class BlockDataManager<P : Any, C : Any>(
     operator fun set(block: Block, data: C) = block.chunk.persistentDataContainer.set(createKey(block), type, data)
     operator fun get(block: Block): C? = block.chunk.persistentDataContainer.get(createKey(block), type)
     fun getValue(block: Block) = get(block)!!
-    fun remove(block: Block) = block.chunk.persistentDataContainer.remove(createKey(block))
+    fun remove(block: Block): C? {
+        val key = createKey(block)
+        val pdc = block.chunk.persistentDataContainer
+        val removedValue = pdc.get(key, type)
+        pdc.remove(key)
+        return removedValue
+    }
+
     fun contains(block: Block) = block.chunk.persistentDataContainer.has(createKey(block), type)
     fun getValuedBlocks(chunk: Chunk): Set<Block> {
         val allKeys = chunk.persistentDataContainer.keys

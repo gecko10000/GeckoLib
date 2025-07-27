@@ -15,10 +15,7 @@ class MMComponentSerializer : KSerializer<Component> {
     private val miniMessage = MiniMessage.miniMessage()
 
     override fun deserialize(decoder: Decoder): Component {
-        // https://github.com/charleskorn/kaml/issues/300
-        val string = decoder.beginStructure(descriptor)
-            .decodeStringElement(descriptor, 0)
-        return miniMessage.deserialize(string)
+        return miniMessage.deserialize(decoder.decodeString())
     }
 
     override fun serialize(encoder: Encoder, value: Component) {

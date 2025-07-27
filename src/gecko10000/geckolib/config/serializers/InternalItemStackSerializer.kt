@@ -13,7 +13,6 @@ class InternalItemStackSerializer : KSerializer<ItemStack> {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun deserialize(decoder: Decoder): ItemStack {
-        // https://github.com/charleskorn/kaml/issues/300
         return ItemStack.deserializeBytes(decoder.decodeString().hexToByteArray())
     }
 
