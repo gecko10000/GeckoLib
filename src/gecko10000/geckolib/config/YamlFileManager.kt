@@ -20,6 +20,7 @@ class YamlFileManager<T : Any>(
             multiLineStringStyle = MultiLineStringStyle.Literal,
             strictMode = false,
             polymorphismStyle = PolymorphismStyle.Property,
+            breakScalarsAt = 10000,
         )
         private const val backupAmount = 5
         private const val backupStart = 0
