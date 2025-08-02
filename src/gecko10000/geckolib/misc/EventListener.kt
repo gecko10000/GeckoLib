@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 
 class EventListener<T : Event>(
-    clazz: Class<T>,
+    private val clazz: Class<T>,
     priority: EventPriority,
     private val listener: (T) -> Unit
 ) : Listener {
@@ -22,7 +22,9 @@ class EventListener<T : Event>(
     }
 
     private fun handleEvent(event: T) {
-        listener(event)
+        if (clazz.isAssignableFrom(event.javaClass)) {
+            listener(event);
+        }
     }
 
     constructor(clazz: Class<T>, listener: (T) -> Unit) : this(clazz, EventPriority.NORMAL, listener)
