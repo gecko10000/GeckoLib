@@ -5,6 +5,10 @@ import java.util.*
 
 object FormatUtils {
 
+    fun Number.formatMoney(): String {
+        return String.format("%.2f", this)
+    }
+
     fun String.titlecase(): String {
         val split = this.split(' ')
         val joiner = StringJoiner(" ")
