@@ -96,6 +96,10 @@ class YamlFileManager<T : Any>(
         loadInternal()
     }
 
+    fun setValue(value: T) {
+        this.value = value
+    }
+
 
     private val backupScheme = "$fileName.%d.bak"
 
