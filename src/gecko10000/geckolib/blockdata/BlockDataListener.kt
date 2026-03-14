@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.*
 import org.bukkit.event.entity.EntityChangeBlockEvent
 import org.bukkit.event.entity.EntityExplodeEvent
+import org.bukkit.event.world.StructureGrowEvent
 
 class BlockDataListener<P : Any>(private val manager: BlockDataManager<*, P>) {
 
@@ -52,6 +53,13 @@ class BlockDataListener<P : Any>(private val manager: BlockDataManager<*, P>) {
         EventListener(EntityChangeBlockEvent::class.java, EventPriority.MONITOR) { e ->
             if (e.isCancelled) return@EventListener
             manager.remove(e.block)
+        }
+        EventListener(
+            StructureGrowEvent::class.java,
+            EventPriority.MONITOR
+        ) { e ->
+            if (e.isCancelled) return@EventListener
+            e.blocks.map { it.block }.forEach(manager::remove)
         }
     }
 }
