@@ -40,6 +40,19 @@ class YamlFileManager<T : Any>(
         serializer
     )
 
+    constructor(
+        configFile: File,
+        stringFormat: StringFormat? = null,
+        initialValue: T,
+        serializer: KSerializer<T>,
+    ) : this(
+        configFile,
+        configFile.parentFile.resolve("backups"),
+        stringFormat,
+        initialValue,
+        serializer
+    )
+
     private val fileName = configFile.name
     private val stringFormat = givenFormat ?: Yaml(configuration = defaultConfiguration)
     var value: T = initialValue
