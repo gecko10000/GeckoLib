@@ -1,5 +1,6 @@
 package gecko10000.geckolib.blockdata
 
+import com.destroystokyo.paper.event.block.BlockDestroyEvent
 import gecko10000.geckolib.misc.EventListener
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -60,6 +61,10 @@ class BlockDataListener<P : Any>(private val manager: BlockDataManager<*, P>) {
         ) { e ->
             if (e.isCancelled) return@EventListener
             e.blocks.map { it.block }.forEach(manager::remove)
+        }
+        EventListener(BlockDestroyEvent::class.java, EventPriority.MONITOR) { e ->
+            if (e.isCancelled) return@EventListener
+            manager.remove(e.block)
         }
     }
 }
