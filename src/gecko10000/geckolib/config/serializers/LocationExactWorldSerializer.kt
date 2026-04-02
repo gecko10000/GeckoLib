@@ -10,14 +10,13 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import java.util.*
 
-class LocationSerializer : KSerializer<Location> {
-    override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("location_world_by_name", PrimitiveKind.STRING)
+class LocationExactWorldSerializer : KSerializer<Location> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("location", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Location {
         val string = decoder.decodeString()
         val split = string.split("/")
-        val world = Bukkit.getWorld(split[0])
+        val world = Bukkit.getWorld(UUID.fromString(split[0]))
         val x = split[1].toDouble()
         val y = split[2].toDouble()
         val z = split[3].toDouble()
@@ -28,7 +27,7 @@ class LocationSerializer : KSerializer<Location> {
 
     override fun serialize(encoder: Encoder, value: Location) {
         val builder = StringJoiner("/")
-        builder.add(value.world.name)
+        builder.add(value.world.uid.toString())
         builder.add(value.x.toString())
         builder.add(value.y.toString())
         builder.add(value.z.toString())
